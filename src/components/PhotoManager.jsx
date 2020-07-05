@@ -2,16 +2,13 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { nanoid } from 'nanoid'
 import ImgModel from '../models/ImgModel'
+import PhotoThumbnail from './PhotoThumbnail'
 
 function PhotoManager(props) {
-  // Load existent data
-  const { data } = props
-  console.log(data)
-
   // Set state including previous data
   const [files, setFiles] = useState(props.data)
 
-  // Fallback path handling:
+  // Fallback file URL path handling:
   // function extractFilename(path) {
   //   if (path.substr(0, 12) == 'C:\\fakepath\\') return path.substr(12) // modern browser
   //   var x
@@ -59,7 +56,6 @@ function PhotoManager(props) {
     })
 
     setFiles((prevFiles) => prevFiles.concat(filesWithUrls))
-    console.log('Files is ', files)
   }
 
   const handleRemove = (id) => {
@@ -85,17 +81,11 @@ function PhotoManager(props) {
       </div>
       <div className="photo-container">
         {files.map((file) => (
-          <div className="photo-thumbnail" key={file.id}>
-            <img src={file.url} alt={file.name} className="thumbnail" />
-            <button
-              className="remove-btn"
-              onClick={() => handleRemove(file.id)}>
-              <i className="material-icons" role="presentation">
-                clear
-              </i>
-              <span className="sr-only">Remove {file.name}</span>
-            </button>
-          </div>
+          <PhotoThumbnail
+            file={file}
+            handleRemove={handleRemove}
+            key={file.id}
+          />
         ))}
       </div>
       <p>Photo(s) you have picked:</p>

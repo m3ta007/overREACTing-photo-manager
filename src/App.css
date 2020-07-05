@@ -1,38 +1,141 @@
-.App {
+@import url(https://fonts.googleapis.com/css?family=Lato:400, 700);
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Global Styles */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px/24px 'Lato', Arial, sans-serif;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@media screen and (prefers-reduced-motion: reduce), (update: slow) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important; /* Hat tip Nick/cssremedy (https://css-tricks.com/revisiting-prefers-reduced-motion-the-reduced-motion-media-query/#comment-1700170) */
+    transition-duration: 0.001ms !important;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sr-only {
+  position: absolute;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Local Styles */
+/* 
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin: 0;
+  padding: 5%;
+  width: 100vw;
+  height: 100vh;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 1px;
+} */
+
+/* Form */
+/* Input */
+
+.photo-input {
+  display: block;
+  width: 100%;
+  min-height: 5rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  color: black;
+  margin-top: 1rem;
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
+  font-family: 'Lato', Arial, sans-serif;
+  font-weight: bolder;
+  text-align: center;
+  letter-spacing: 0.15rem;
+}
+
+.photo-input:active,
+.photo-input:focus,
+.photo-input:hover {
+  border-bottom: thick solid black;
+  font-weight: bold;
+  outline: none;
+}
+
+/* .photo-input-validity::after {
+  padding-left: 0.3125rem;
+}
+
+input.photo-input:invalid + .photo-input-validity::after {
+  content: '✖';
+}
+
+input.photo-input:valid + .photo-input-validity::after {
+  content: '✓';
+} */
+
+/* Photo thumbnails */
+
+.photo-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin: 1rem;
+}
+
+.photo-thumbnail {
+  /* width: 10rem; */
+  height: 10rem;
+  margin: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+img.thumbnail {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Icon Buttons */
+
+.remove-btn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 2rem;
+  height: 2rem;
+  margin: 0.25rem;
+  border: 2px solid black;
+  border-radius: 0.5rem;
+  background-color: white;
+  font-size: 0.5rem;
+  font-weight: bolder;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+.remove-btn:active,
+.remove-btn:focus,
+.remove-btn:hover {
+  border-color: white;
+  background-color: black;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  font-weight: bold;
+  outline: none;
 }

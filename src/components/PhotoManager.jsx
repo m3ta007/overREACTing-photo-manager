@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { nanoid } from 'nanoid'
+import ImgModel from '../models/ImgModel'
 
 function PhotoManager(props) {
   // Load existent data
   const { data } = props
 
-  console.log(data)
+  // Set state including previous data
+  const [files, setFiles] = useState(props.data)
 
   // Fallback path handling:
   // function extractFilename(path) {
@@ -39,11 +42,23 @@ function PhotoManager(props) {
     })
   }
 
-  const handleSelect = async (evt) => {
-    console.log(evt)
-    const files = [...evt.target.files]
-    const urls = await Promise.all(files.map((o) => fileToDataUrl(o)))
+  const handleSelect = async (e) => {
+    const filesAdded = [...e.target.files]
+    const newFiles = []
+
     // array with dataUrl to be used as a value for src of img tags
+    const filesWithUrls = await Promise.all(
+      filesAdded.map((o) =>
+        fileToDataUrl(o).then((result) =>
+          newFiles.push(new ImgModel(nanoid(), result, o.name))
+        )
+      )
+    ).then(() => {
+      return newFiles
+    })
+
+    setFiles((prevFiles) => prevFiles.concat(filesWithUrls))
+    console.log('Files is ', files)
   }
 
   const handleRemove = () => {
@@ -73,21 +88,21 @@ function PhotoManager(props) {
       {/* static images: */}
       <div className="photo-container">
         <div className="photo-thumbnail">
-          <img src={data[0].src} alt={data[0].alt} className="thumbnail" />
+          <img src={data[0].url} alt={data[0].name} className="thumbnail" />
           <button className="remove-btn" onClick={() => handleRemove()}>
             <i className="material-icons" role="presentation">
               clear
             </i>
-            <span className="sr-only">Remove {data[0].alt}</span>
+            <span className="sr-only">Remove {data[0].name}</span>
           </button>
         </div>
         <div className="photo-thumbnail">
-          <img src={data[1].src} alt={data[1].alt} className="thumbnail" />
+          <img src={data[1].url} alt={data[1].name} className="thumbnail" />
           <button className="remove-btn" onClick={() => handleRemove()}>
             <i className="material-icons" role="presentation">
               clear
             </i>
-            <span className="sr-only">Remove {data[1].alt}</span>
+            <span className="sr-only">Remove {data[1].name}</span>
           </button>
         </div>
       </div>
@@ -96,12 +111,7 @@ function PhotoManager(props) {
 }
 
 PhotoManager.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      src: PropTypes.string,
-      alt: PropTypes.string,
-    })
-  ),
+  data: PropTypes.arrayOf(PropTypes.instanceOf(ImgModel)),
 }
 
 export default PhotoManager

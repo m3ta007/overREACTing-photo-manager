@@ -40,6 +40,7 @@ function PhotoManager(props) {
   }
 
   const handleSelect = async (evt) => {
+    console.log(evt)
     const files = [...evt.target.files]
     const urls = await Promise.all(files.map((o) => fileToDataUrl(o)))
     // array with dataUrl to be used as a value for src of img tags
@@ -51,19 +52,21 @@ function PhotoManager(props) {
 
   return (
     <div className="container">
-      <label htmlFor="photo-input" className="photo-input-label">
-        <h2>Select a photo</h2>
-      </label>
-      {/* Add multiple? https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file) */}
-      <input
-        type="file"
-        name="photo"
-        accept="image/*"
-        // onChange={extractFilename(this.value)}
-        onChange={handleSelect}
-        id="photo-input"
-        className="photo-input"
-      />
+      <div className="photo-input-container">
+        <label htmlFor="photo-input" className="photo-input-label">
+          <h2>Click to select a photo</h2>
+        </label>
+        {/* Add multiple? https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file) */}
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          // onChange={extractFilename(this.value)}
+          onChange={handleSelect}
+          id="photo-input"
+          className="photo-input"
+        />
+      </div>
       <p>
         The photo you picked is: <span id="photo-name">file-name-here.img</span>
       </p>

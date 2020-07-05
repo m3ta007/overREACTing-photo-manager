@@ -115,13 +115,20 @@ input.photo-input:valid + .photo-input-validity::after {
   content: '✓';
 } */
 
+/* List of photos */
+
+.photo-list {
+  text-align: left;
+  font-weight: lighter;
+}
+
 /* Photo thumbnails */
 
 .photo-container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin: 1rem;
 }
 
 .photo-thumbnail {

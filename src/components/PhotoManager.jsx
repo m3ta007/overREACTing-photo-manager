@@ -6,6 +6,7 @@ import ImgModel from '../models/ImgModel'
 function PhotoManager(props) {
   // Load existent data
   const { data } = props
+  console.log(data)
 
   // Set state including previous data
   const [files, setFiles] = useState(props.data)
@@ -61,8 +62,8 @@ function PhotoManager(props) {
     console.log('Files is ', files)
   }
 
-  const handleRemove = () => {
-    console.log('Handle me!')
+  const handleRemove = (id) => {
+    setFiles((prevFiles) => prevFiles.filter((file) => file.id !== id))
   }
 
   return (
@@ -71,7 +72,6 @@ function PhotoManager(props) {
         <label htmlFor="photo-input" className="photo-input-label">
           <h2>Click to select a photo</h2>
         </label>
-        {/* Add multiple? https://html.spec.whatwg.org/multipage/input.html#file-upload-state-(type=file) */}
         <input
           type="file"
           name="photo"
@@ -80,32 +80,30 @@ function PhotoManager(props) {
           onChange={handleSelect}
           id="photo-input"
           className="photo-input"
+          multiple
         />
       </div>
-      <p>
-        The photo you picked is: <span id="photo-name">file-name-here.img</span>
-      </p>
-      {/* static images: */}
       <div className="photo-container">
-        <div className="photo-thumbnail">
-          <img src={data[0].url} alt={data[0].name} className="thumbnail" />
-          <button className="remove-btn" onClick={() => handleRemove()}>
-            <i className="material-icons" role="presentation">
-              clear
-            </i>
-            <span className="sr-only">Remove {data[0].name}</span>
-          </button>
-        </div>
-        <div className="photo-thumbnail">
-          <img src={data[1].url} alt={data[1].name} className="thumbnail" />
-          <button className="remove-btn" onClick={() => handleRemove()}>
-            <i className="material-icons" role="presentation">
-              clear
-            </i>
-            <span className="sr-only">Remove {data[1].name}</span>
-          </button>
-        </div>
+        {files.map((file) => (
+          <div className="photo-thumbnail" key={file.id}>
+            <img src={file.url} alt={file.name} className="thumbnail" />
+            <button
+              className="remove-btn"
+              onClick={() => handleRemove(file.id)}>
+              <i className="material-icons" role="presentation">
+                clear
+              </i>
+              <span className="sr-only">Remove {file.name}</span>
+            </button>
+          </div>
+        ))}
       </div>
+      <p>Photo(s) you have picked:</p>
+      <ul className="photo-list">
+        {files.map((file) => (
+          <li key={file.id}>{file.name}</li>
+        ))}
+      </ul>
     </div>
   )
 }

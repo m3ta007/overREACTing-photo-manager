@@ -11,12 +11,13 @@ function App() {
     new ImgModel(
       nanoid(),
       dataImage,
-      'White road bicycle against a teal wall in the sunset. Photo by Carl Nenzen Loven on Unsplash'
+      // 'White road bicycle against a teal wall in the sunset. Photo by Carl Nenzen Loven on Unsplash'
+      'carl-nenzen-loven-white-road-bike-unsplash.jpg'
     ),
     new ImgModel(
       nanoid(),
       'https://images.unsplash.com/photo-1523740856324-f2ce89135981?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1098&q=80',
-      'Red rusty cruiser bicycle with a basket against a yellow wall. Photo by Chris Barbalis on Unsplash'
+      'chris-barbalis-rusty-cruiser-bike-unsplash.jpg'
     ),
   ]
 
